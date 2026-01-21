@@ -23,6 +23,55 @@ A reliable request-reply system over UDP implementing RPC semantics with at-most
 +------------------+                    +------------------+
 ```
 
+## Request-Reply Flow
+
+```
+    CLIENT                                           SERVER
+       |                                                |
+       |  1. Request [reqid, svcid, payload]            |
+       |----------------------------------------------->|
+       |                                                |
+       |                         2. Process request ... |
+       |                                                |
+       |  3. Heartbeat [-reqid] (if processing takes)   |
+       |<-----------------------------------------------|
+       |                                                |
+       |  4. Heartbeat ACK [-reqid]                     |
+       |----------------------------------------------->|
+       |                                                |
+       |  5. Response [reqid, response]                 |
+       |<-----------------------------------------------|
+       |                                                |
+```
+
+### Normal Flow (Fast Response)
+
+```
+CLIENT                           SERVER
+   |                                |
+   |-------- Request [17] -------->|
+   |                                | Process: is 17 prime?
+   |<------ Response [prime] ------|
+   |                                |
+```
+
+### Heartbeat Flow (Slow Processing)
+
+```
+CLIENT                           SERVER
+   |                                |
+   |-------- Request [big#] ------>|
+   |                                | Processing...
+   |<------ Heartbeat -------------|  (every 2s)
+   |------- Heartbeat ACK -------->|
+   |                                | Still processing...
+   |<------ Heartbeat -------------|
+   |------- Heartbeat ACK -------->|
+   |                                | Done!
+   |<------ Response --------------|
+   |                                |
+```
+
 ## Project Structure
 
 ```
