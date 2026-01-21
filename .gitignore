@@ -1,0 +1,16 @@
+# Build artifacts
+*.o
+/server
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Database and log files
+*.db
+*.log
+
+# Test and debug files
+test_*.py
+server_null.c

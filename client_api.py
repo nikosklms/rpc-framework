@@ -102,8 +102,8 @@ class __ClientCore:
                   
             except queue.Empty:
                 retry_count += 1
-                if(retry_count == 4):
-                    continue
+                if retry_count >= 4:
+                    break
                 print(f"[Timeout] Retry {retry_count}/3 (REQID: {reqid})")
                 self.__send_queue.put(last_packet)
         
@@ -193,7 +193,7 @@ class __ClientCore:
         with self.__pending_lock:
             self.__pending_requests[reqid] = response_q
 
-        packet = struct.pack("!IiI", reqid, -1, 0) + b""
+        packet = struct.pack("!iii", reqid, -1, 0) + b""
         self.__send_queue.put(packet)
 
         try:
