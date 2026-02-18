@@ -1,4 +1,4 @@
-# UDP RPC Client-Server System
+# RPC Client-Server System
 
 A reliable request-reply system over UDP implementing RPC semantics with at-most-once delivery guarantees.
 
