@@ -209,7 +209,3 @@ $ python3 client_app2.py
 [APP] Enter a number (or type 'exit' to quit): 20
 [APP] Server Response: 20 is not prime
 ```
-
-## License
-
-MIT
